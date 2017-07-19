@@ -1,0 +1,21 @@
+version: '2'
+services:
+  brewpi:
+    build: .
+    image: brewpi/brewpi-raspbian
+    container_name: brewpi-${BREWPI_ID} 
+    hostname: brewpi-${BREWPI_ID}.local
+    ports:
+        - 80${BREWPI_ID}:80 
+    environment:
+        - BREWPI_ID=${BREWPI_ID}
+    volumes:
+        - ${DATA_DIR}/brewpi-${BREWPI_ID}:/brewpi 
+        # get timezone from host by mounting host settings 
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+    restart: always
+
+networks:
+    default:
+      driver: bridge
