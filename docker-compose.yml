@@ -1,0 +1,20 @@
+version: '2'
+services:
+  brewpi:
+    # image: brewpi/brewpi-rpi:latest
+    build: .
+    container_name: brewpi
+    hostname: brewpi.local
+    ports:
+        - 10080:80
+    volumes:
+        - ~/brewpi-data:/brewpi
+        # get timezone from host by mounting host settings 
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+    restart: always
+    command: "/root/watcher.sh"
+
+networks:
+    default:
+      driver: bridge
