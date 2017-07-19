@@ -1,19 +1,20 @@
 version: '2'
 services:
   brewpi:
-    # image: brewpi/brewpi-rpi:latest
     build: .
-    container_name: brewpi
-    hostname: brewpi.local
+    image: brewpi/brewpi-ubuntu
+    container_name: brewpi-${BREWPI_ID} 
+    hostname: brewpi-${BREWPI_ID}.local
     ports:
-        - 10080:80
+        - 80${BREWPI_ID}:80 
+    environment:
+        - BREWPI_ID=${BREWPI_ID}
     volumes:
-        - ~/brewpi-data:/brewpi
+        - ${DATA_DIR}/brewpi-${BREWPI_ID}:/brewpi 
         # get timezone from host by mounting host settings 
         - "/etc/timezone:/etc/timezone:ro"
         - "/etc/localtime:/etc/localtime:ro"
     restart: always
-    command: "/root/watcher.sh"
 
 networks:
     default:

@@ -43,15 +43,17 @@ RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 COPY nginx-conf.txt /etc/nginx/sites-available/default
 
 # Copy entrypoint script
-ADD entrypoint.sh /root
-RUN chmod +x /root/entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Copy script that periodically checks the script status
-ADD watcher.sh /root
-RUN chmod +x /root/watcher.sh
+COPY watcher.sh /watcher.sh
+RUN chmod +x /watcher.sh
 
 WORKDIR /home/brewpi/
 
-ENTRYPOINT "/root/entrypoint.sh"
+# this will always run
+ENTRYPOINT ["/entrypoint.sh"]
 
-CMD "/root/watcher.sh"
+# this will be run after entrypoint, unless overridden by the user
+CMD ["/watcher.sh"]
