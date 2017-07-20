@@ -12,7 +12,6 @@ if [ "$(ls -A /brewpi)" ]; then
 else
   echo "Setting up new persisted data directory outside of container"
   # if files don't exist, copy them to the persisted location outside the container
-  sed -i '/wwwPath/c\wwwPath = /var/www/html' /home/brewpi/settings/defaults.cfg
   mv /home/brewpi/settings /brewpi/settings
   mv /home/brewpi/data /brewpi/data
   mv /home/brewpi/logs /brewpi/logs
@@ -35,7 +34,7 @@ sudo -u brewpi touch /home/brewpi/logs/stderr.txt
 sudo -u brewpi touch /home/brewpi/logs/stdout.txt
 
 service nginx start
-service php7.0-fpm start
+service php5-fpm start
 
 # run command if passed to the container, instead of running watcher.sh
 exec $@

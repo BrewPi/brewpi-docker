@@ -12,7 +12,6 @@ if [ "$(ls -A /brewpi)" ]; then
 else
   echo "Setting up new persisted data directory outside of container"
   # if files don't exist, copy them to the persisted location outside the container
-  sed -i '/wwwPath/c\wwwPath = /var/www/html' /home/brewpi/settings/defaults.cfg
   mv /home/brewpi/settings /brewpi/settings
   mv /home/brewpi/data /brewpi/data
   mv /home/brewpi/logs /brewpi/logs

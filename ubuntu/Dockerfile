@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
   sudo
   
 # upgrade pip
-RUN pip install -U pip
+RUN pip install --upgrade pip
 
 # install pip dependencies
 RUN pip install pyserial psutil simplejson configobj gitpython --upgrade

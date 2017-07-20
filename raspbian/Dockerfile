@@ -10,15 +10,13 @@ RUN apt-get update && apt-get install -y \
   python-dev \
   python-pip \
   git \
-  php7.0-fpm \
-  php7.0-mbstring \
-  php7.0-xml \
+  php5-fpm \
   nginx \
   tzdata \
   sudo
   
 # upgrade pip
-RUN pip install -U pip
+RUN pip install --upgrade pip
 
 # install pip dependencies
 RUN pip install pyserial psutil simplejson configobj gitpython --upgrade
