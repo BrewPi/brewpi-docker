@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
   php7.0-xml \
   nginx \
   tzdata \
+  nano \
   sudo
   
 # upgrade pip

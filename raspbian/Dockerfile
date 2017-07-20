@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
   php5-fpm \
   nginx \
   tzdata \
+  nano \
   sudo
   
 # upgrade pip

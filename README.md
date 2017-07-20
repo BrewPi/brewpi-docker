@@ -45,3 +45,11 @@ Let's break that down to explain each part.
 | --restart always        | Start on boot and always restart the container when it stops.                                                             |
 | brewpi/brewpi-raspbian  | The image that is used. Use`brewpi/brewpi-raspbian` for the raspberry pi, `brewpi/brewpi-ubuntu` for x64/x86 systems.     |
 
+
+Connecting the BrewPi Spark via USB
+-----------------------------------
+If you want to connect to the BrewPi Spark over USB, you need to pass an extra argument to the container to forward the usb device.
+
+| Parameter                              | Explanation                                                                                                |
+|----------------------------------------|------------------------------------------------------------------------------------------------------------|
+| --device=/dev/ttyACM0:/dev/ttyACM0     | Make the serial port device /dev/ttyACM0 available in the container                                        |
