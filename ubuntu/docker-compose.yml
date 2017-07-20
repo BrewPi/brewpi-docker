@@ -10,7 +10,7 @@ services:
     environment:
         - BREWPI_ID=${BREWPI_ID}
     volumes:
-        - ${DATA_DIR}/brewpi-${BREWPI_ID}:/brewpi 
+        - ${DATA_DIR}/brewpi-${BREWPI_ID}:/data
         # get timezone from host by mounting host settings 
         - "/etc/timezone:/etc/timezone:ro"
         - "/etc/localtime:/etc/localtime:ro"

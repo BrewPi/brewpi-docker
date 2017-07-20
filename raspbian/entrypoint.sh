@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # check if persisted data already exists
-if [ "$(ls -A /brewpi)" ]; then
+if [ "$(ls -A /data)" ]; then
   # if files already exist, remove the defaults.
   # We'll replace them with symlinks to persisted data
   echo "Persistent files already present"
@@ -12,21 +12,21 @@ if [ "$(ls -A /brewpi)" ]; then
 else
   echo "Setting up new persisted data directory outside of container"
   # if files don't exist, copy them to the persisted location outside the container
-  mv /home/brewpi/settings /brewpi/settings
-  mv /home/brewpi/data /brewpi/data
-  mv /home/brewpi/logs /brewpi/logs
-  mv /var/www/html/data /brewpi/html_data
+  mv /home/brewpi/settings /data/settings
+  mv /home/brewpi/data /data/data
+  mv /home/brewpi/logs /data/logs
+  mv /var/www/html/data /data/html_data
 fi
 
 # create symlinks to persisted data outside of container
-ln -s -b /brewpi/settings /home/brewpi/settings
-ln -s -b /brewpi/data /home/brewpi/data
-ln -s -b /brewpi/logs /home/brewpi/logs
-ln -s -b /brewpi/html_data /var/www/html/data
+ln -s -b /data/settings /home/brewpi/settings
+ln -s -b /data/data /home/brewpi/data
+ln -s -b /data/logs /home/brewpi/logs
+ln -s -b /data/html_data /var/www/html/data
 
 # set ownership of files in persisted directory
-chown -R brewpi:brewpi /brewpi/
-chown -R brewpi:www-data /brewpi/html_data/
+chown -R brewpi:brewpi /data
+chown -R brewpi:www-data /data/html_data
 
 # Make sure to always have the log files around
 sudo -u brewpi mkdir -p /home/brewpi/logs
