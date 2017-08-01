@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
   nginx \
   tzdata \
   nano \
+  dfu-util \
   sudo
   
 # upgrade pip
@@ -35,6 +36,7 @@ RUN rm -rf /var/www/html
 # clone brewpi repositories
 RUN git clone --depth 1 https://github.com/BrewPi/brewpi-script /home/brewpi
 RUN git clone --depth 1 https://github.com/BrewPi/brewpi-www /var/www/html
+RUN git clone --depth 1 https://github.com/BrewPi/brewpi-tools /root/brewpi-tools
 
 # just to be sure, also run the fixPermissions script
 RUN /home/brewpi/utils/fixPermissions.sh
