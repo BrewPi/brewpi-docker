@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # check if persisted data already exists
 if [ "$(ls -A /data)" ]; then
@@ -37,4 +37,4 @@ service nginx start
 service php5-fpm start
 
 # run command if passed to the container, instead of running watcher.sh
-exec $@
+exec "$@"
