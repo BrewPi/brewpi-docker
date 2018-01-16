@@ -33,8 +33,13 @@ sudo -u brewpi touch /home/brewpi/logs/stderr.txt
 sudo -u brewpi touch /home/brewpi/logs/stdout.txt
 
 # setup default password for port 81 if the password file doesn't exist
-if ! [ "$(ls -A /data/settings/brewpi.htpasswd)" ]; then
+if ! [ -f /data/settings/brewpi.htpasswd ]; then
   htpasswd -bc /data/settings/brewpi.htpasswd brewer brewpi
+fi
+
+# make sure a config.cfg file exist, so it is easier for users to edit it
+if ! [ -f /data/settings/config.cfg ]; then
+  sudo -u brewpi cp /data/settings/config.cfg.example /data/settings/config.cfg
 fi
 
 service nginx start
