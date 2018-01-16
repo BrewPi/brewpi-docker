@@ -52,9 +52,6 @@ RUN /home/brewpi/utils/fixPermissions.sh
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 COPY nginx-conf.txt /etc/nginx/sites-available/default
 
-# setup default password for port 81
-RUN htpasswd -bc /etc/nginx/brewpi.htpasswd brewer brewpi
-
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

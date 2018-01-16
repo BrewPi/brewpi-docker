@@ -32,6 +32,11 @@ chown -R brewpi:www-data /data/html_data
 sudo -u brewpi touch /home/brewpi/logs/stderr.txt
 sudo -u brewpi touch /home/brewpi/logs/stdout.txt
 
+# setup default password for port 81 if the password file doesn't exist
+if ! [ "$(ls -A /data/settings/brewpi.htpasswd)" ]; then
+  htpasswd -bc /data/settings/brewpi.htpasswd brewer brewpi
+fi
+
 service nginx start
 service php7.0-fpm start
 
