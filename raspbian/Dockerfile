@@ -1,8 +1,9 @@
-FROM resin/rpi-raspbian:jessie
+FROM resin/rpi-raspbian:stretch
 MAINTAINER BrewPi / Elco Jacobs <elco@brewpi.com>
 
 # expose port 80, the default web server port
 EXPOSE 80
+EXPOSE 81
 
 # install apt dependencies
 RUN apt-get update && apt-get install -y \
@@ -10,18 +11,23 @@ RUN apt-get update && apt-get install -y \
   python-dev \
   python-pip \
   git \
-  php5-fpm \
+  php7.0-fpm \
+  php7.0-xml \
   nginx \
   tzdata \
   nano \
+  vim \
   dfu-util \
   sudo
-  
+
 # upgrade pip
 RUN pip install --upgrade pip
 
+# install setuptools and wheel
+RUN pip install --upgrade setuptools wheel
+
 # install pip dependencies
-RUN pip install pyserial psutil simplejson configobj gitpython --upgrade
+RUN pip install --upgrade pyserial psutil simplejson configobj gitpython
 
 # create users and add them to the right group
 RUN useradd -G www-data,dialout brewpi
