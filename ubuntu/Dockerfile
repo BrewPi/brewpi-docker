@@ -3,6 +3,8 @@ MAINTAINER BrewPi / Elco Jacobs <elco@brewpi.com>
 
 # expose port 80, the default web server port
 EXPOSE 80
+# expose port 81, will proxy to 80 with password protection
+EXPOSE 81
 
 # install apt dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,14 +18,19 @@ RUN apt-get update && apt-get install -y \
   nginx \
   tzdata \
   nano \
+  vim \
   dfu-util \
+  apache2-utils \
   sudo
   
 # upgrade pip
 RUN pip install --upgrade pip
 
+# install setuptools and wheel
+RUN pip install --upgrade setuptools wheel
+
 # install pip dependencies
-RUN pip install pyserial psutil simplejson configobj gitpython --upgrade
+RUN pip install --upgrade pyserial psutil simplejson configobj gitpython
 
 # create users and add them to the right group
 RUN useradd -G www-data,dialout brewpi
@@ -44,6 +51,9 @@ RUN /home/brewpi/utils/fixPermissions.sh
 # copy nginx conf to nginx default
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 COPY nginx-conf.txt /etc/nginx/sites-available/default
+
+# setup default password for port 81
+RUN htpasswd -bc /etc/nginx/brewpi.htpasswd brewer brewpi
 
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh

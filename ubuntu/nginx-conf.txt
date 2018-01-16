@@ -22,3 +22,19 @@ server {
         include fastcgi_params;
     }
 }
+
+server {
+    listen                  81;
+    server_name             brewpi-protected.local;
+        
+    location / {
+        proxy_pass                              http://localhost:80/;
+        proxy_buffering                         off;
+        proxy_set_header Host                   $http_host;
+        proxy_set_header X-Real-IP              $remote_addr;
+        proxy_set_header X-Forwarded-For        $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto      $scheme;
+        auth_basic                              "Username and Password Required";
+        auth_basic_user_file                    /etc/nginx/brewpi.htpasswd;
+    }
+}
