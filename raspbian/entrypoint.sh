@@ -24,13 +24,12 @@ ln -s -b /data/data /home/brewpi/data
 ln -s -b /data/logs /home/brewpi/logs
 ln -s -b /data/html_data /var/www/html/data
 
-# set ownership of files in persisted directory
-chown -R brewpi:brewpi /data
-chown -R brewpi:www-data /data/html_data
-
 # Make sure to always have the log files around
-sudo -u brewpi touch /home/brewpi/logs/stderr.txt
-sudo -u brewpi touch /home/brewpi/logs/stdout.txt
+mkdir -p /home/brewpi/logs
+touch /home/brewpi/logs/stderr.txt
+chmod 755 /home/brewpi/logs/stderr.txt
+touch /home/brewpi/logs/stdout.txt
+chmod 755 /home/brewpi/logs/stderr.txt
 
 # setup default password for port 81 if the password file doesn't exist
 if ! [ -f /data/settings/brewpi.htpasswd ]; then
@@ -39,7 +38,7 @@ fi
 
 # make sure a config.cfg file exist, so it is easier for users to edit it
 if ! [ -f /data/settings/config.cfg ]; then
-  sudo -u brewpi cp /data/settings/config.cfg.example /data/settings/config.cfg
+  cp /data/settings/config.cfg.example /data/settings/config.cfg
 fi
 
 service nginx start

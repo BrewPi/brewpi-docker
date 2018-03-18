@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
   dfu-util \
   apache2-utils \
   sudo
-  
+
 # upgrade pip
 RUN pip install --upgrade pip
 
@@ -32,21 +32,13 @@ RUN pip install --upgrade setuptools wheel
 # install pip dependencies
 RUN pip install --upgrade pyserial psutil simplejson configobj gitpython
 
-# create users and add them to the right group
-RUN useradd -G www-data,dialout brewpi
-# set default password to brewpi:brewpi
-RUN bash -c "echo -e \"brewpi\nbrewpi\"|passwd brewpi"
-
 # remove existing content in web server root
 RUN rm -rf /var/www/html
 
 # clone brewpi repositories
 RUN git clone --depth 1 https://github.com/BrewPi/brewpi-script /home/brewpi
 RUN git clone --depth 1 https://github.com/BrewPi/brewpi-www /var/www/html
-RUN git clone --depth 1 https://github.com/BrewPi/brewpi-tools /root/brewpi-tools
-
-# just to be sure, also run the fixPermissions script
-RUN /home/brewpi/utils/fixPermissions.sh
+RUN git clone --depth 1 https://github.com/BrewPi/brewpi-tools /root/brewpi-tools 
 
 # copy nginx conf to nginx default
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
