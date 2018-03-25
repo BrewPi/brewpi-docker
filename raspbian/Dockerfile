@@ -44,6 +44,9 @@ RUN git clone --depth 1 https://github.com/BrewPi/brewpi-tools /root/brewpi-tool
 RUN mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 COPY nginx-conf.txt /etc/nginx/sites-available/default
 
+# set permissions on html directory
+RUN chown -R www-data:www-data /var/www/html; chmod g+s /var/www/html
+
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
